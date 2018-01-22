@@ -1,0 +1,51 @@
+apply {
+  plugin 'java'
+  plugin 'idea'
+  plugin 'eclipse'
+}
+
+group 'ebc-2in2crc'
+project.ext {
+  artifactId = 'zlib'
+}
+version '1.0'
+
+sourceCompatibility = targetCompatibility = 1.8
+
+tasks.withType(AbstractCompile) each { it.options.encoding = 'UTF-8' }
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  testCompile 'junit:junit:4.12'
+}
+
+def productBaseName = project.name + "-" + project.version
+task wrapperCommand() {
+  copy {
+    from "./zlib"
+    into "./build/tmp"
+    filter { line ->
+      line.replaceAll "JARFILE", "${productBaseName}.jar"
+    }
+  }
+}
+
+task distribution(dependsOn: [build, wrapperCommand], type: Zip) {
+  into ("${productBaseName}") {
+    from "./build/tmp/zlib"
+    from "./build/libs/${productBaseName}.jar"
+  }
+  archiveName "${productBaseName}.zip"
+}
+
+task homeBin(dependsOn: [build, wrapperCommand]) {
+  def userHomeBin = System.getProperty("user.home") + "/bin"
+  copy {
+    from "./build/tmp/zlib"
+    from "./build/libs/${productBaseName}.jar"
+    into userHomeBin
+  }
+}
