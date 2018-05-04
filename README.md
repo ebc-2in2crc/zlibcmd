@@ -62,7 +62,7 @@ $ brew install zlibcmd
 
 ## Licence
 
-[MIT](https://github.com/ebc-2in2crc/zlib-flate/blob/master/LICENCE)
+[MIT](https://github.com/ebc-2in2crc/zlibcmd/blob/master/LICENSE)
 
 ## Author
 
