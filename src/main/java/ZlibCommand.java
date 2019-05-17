@@ -1,9 +1,12 @@
 import java.io.IOException;
 
 public class ZlibCommand {
+    private static int DEFAULT_BUFFER_SIZE = 8192;
+
     private final String[] args;
     private boolean compression = false;
     private boolean decompression = false;
+    private int bufferSize = DEFAULT_BUFFER_SIZE;
 
     public static void main(String[] args) throws IOException {
         new ZlibCommand(args).exec();
@@ -20,15 +23,26 @@ public class ZlibCommand {
         }
 
         if (compression) {
-            new ZlibDeflate(System.in, System.out).deflate();
+            new ZlibDeflate(System.in, System.out, bufferSize).deflate();
         } else {
-            new ZlibInflate(System.in, System.out).inflate();
+            new ZlibInflate(System.in, System.out, bufferSize).inflate();
         }
     }
 
     private boolean checkArguments() {
-        for (String s : args) {
+        for (int i = 0; i < args.length; i++) {
+            String s = args[i];
             switch (s) {
+                case "-b":
+                case "--buffer-size":
+                    i++;
+                    try {
+                        bufferSize = Integer.parseInt(args[i]);
+                    } catch (ArrayIndexOutOfBoundsException | NumberFormatException ignore) {
+                        usage();
+                        return true;
+                    }
+                    break;
                 case "-c":
                 case "--compress":
                     compression = true;
@@ -61,6 +75,8 @@ public class ZlibCommand {
                 "" + LF +
                 "usage: zlib [options]" + LF +
                 "" + LF +
+                "  -b, --buffer-size specify buffer size in bytes." + LF +
+                "                    (default: 8192)" + LF +
                 "  -c, --compress    compresses the input" + LF +
                 "  -d, --decompress  decompresses the input" + LF +
                 "  -h, --help        display this help" + LF +

@@ -151,6 +151,8 @@ public class ZlibCommandTest {
                 "" + LF +
                 "usage: zlib [options]" + LF +
                 "" + LF +
+                "  -b, --buffer-size specify buffer size in bytes." + LF +
+                "                    (default: 8192)" + LF +
                 "  -c, --compress    compresses the input" + LF +
                 "  -d, --decompress  decompresses the input" + LF +
                 "  -h, --help        display this help" + LF +
