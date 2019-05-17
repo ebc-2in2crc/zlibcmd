@@ -115,7 +115,7 @@ public class ZlibCommandTest {
 
             sut.exec();
 
-            assertThat(baos.toString(), is("zlib version 1.0" + LF));
+            assertThat(baos.toString(), is("zlib version 1.1" + LF));
         }
 
         @Test
@@ -124,7 +124,7 @@ public class ZlibCommandTest {
 
             sut.exec();
 
-            assertThat(baos.toString(), is("zlib version 1.0" + LF));
+            assertThat(baos.toString(), is("zlib version 1.1" + LF));
         }
 
         @Test

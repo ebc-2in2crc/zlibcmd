@@ -49,7 +49,7 @@ public class ZlibCommand {
                     break;
                 case "-v":
                 case "--version":
-                    System.err.println("zlib version 1.0");
+                    System.err.println("zlib version 1.1");
                     return true;
                 case "-d":
                 case "--decompress":
