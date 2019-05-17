@@ -161,7 +161,7 @@ public class ZlibCommandTest {
         return usage;
     }
 
-    public static class InvalidOptoin {
+    public static class InvalidOption {
 
         private ByteArrayOutputStream baos;
 
