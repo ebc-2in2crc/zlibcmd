@@ -8,7 +8,7 @@ group 'ebc-2in2crc'
 project.ext {
   artifactId = 'zlib'
 }
-version '1.0'
+version '1.1'
 
 sourceCompatibility = targetCompatibility = 1.8
 
