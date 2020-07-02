@@ -1,4 +1,6 @@
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ZlibCommand {
     private static int DEFAULT_BUFFER_SIZE = 8192;
@@ -7,13 +9,14 @@ public class ZlibCommand {
     private boolean compression = false;
     private boolean decompression = false;
     private int bufferSize = DEFAULT_BUFFER_SIZE;
-
-    public static void main(String[] args) throws IOException {
-        new ZlibCommand(args).exec();
-    }
+    private String inFilePath;
 
     public ZlibCommand(String[] args) {
         this.args = args;
+    }
+
+    public static void main(String[] args) throws IOException {
+        new ZlibCommand(args).exec();
     }
 
     void exec() throws IOException {
@@ -23,7 +26,9 @@ public class ZlibCommand {
         }
 
         if (compression) {
-            new ZlibDeflate(System.in, System.out, bufferSize).deflate();
+            try (final InputStream in = inFilePath == null ? System.in : new FileInputStream(inFilePath)) {
+                new ZlibDeflate(in, System.out, bufferSize).deflate();
+            }
         } else {
             new ZlibInflate(System.in, System.out, bufferSize).inflate();
         }
@@ -47,6 +52,10 @@ public class ZlibCommand {
                 case "--compress":
                     compression = true;
                     break;
+                case "-h":
+                case "--help":
+                    usage();
+                    return true;
                 case "-v":
                 case "--version":
                     System.err.println("zlib version 1.1");
@@ -56,8 +65,8 @@ public class ZlibCommand {
                     decompression = true;
                     break;
                 default:
-                    usage();
-                    return true;
+                    inFilePath = s;
+                    return false;
             }
         }
 

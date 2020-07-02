@@ -60,7 +60,7 @@ $ brew install zlibcmd
 4. Push to the branch (git push origin my-new-feature)
 5. Create new Pull Request
 
-## Licence
+## License
 
 [MIT](https://github.com/ebc-2in2crc/zlibcmd/blob/master/LICENSE)
 

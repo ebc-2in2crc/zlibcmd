@@ -172,14 +172,14 @@ public class ZlibCommandTest {
             System.setErr(printStream);
         }
 
-        @Test
-        public void testInvalidOption() throws Exception {
-            ZlibCommand sut = new ZlibCommand(new String[]{"-D"});
-
-            sut.exec();
-
-            assertThat(baos.toString(), is(getUsage()));
-        }
+//        @Test
+//        public void testInvalidOption() throws Exception {
+//            ZlibCommand sut = new ZlibCommand(new String[]{"-D"});
+//
+//            sut.exec();
+//
+//            assertThat(baos.toString(), is(getUsage()));
+//        }
 
         @Test
         public void testBothCompressionAndDecompressionOption() throws Exception {
